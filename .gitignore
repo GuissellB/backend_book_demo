@@ -122,3 +122,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.idea
+
+books_data.csv
+Books_rating.csv
+books_ratings_sample.csv
