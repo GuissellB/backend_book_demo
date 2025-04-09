@@ -2,7 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
+.venv/
+models/
+metrics/
 # C extensions
 *.so
 
@@ -122,7 +125,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
+.idea
 books_data.csv
 Books_rating.csv
 books_ratings_sample.csv
