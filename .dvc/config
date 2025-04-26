@@ -1,0 +1,3 @@
+['remote "data-versioning"']
+    url = s3://proyecto-guiss-b
+    region = us-east-1
