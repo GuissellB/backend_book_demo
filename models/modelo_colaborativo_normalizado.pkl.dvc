@@ -1,0 +1,5 @@
+outs:
+- md5: ea259880b131f105d95b57036692831e
+  size: 2521470235
+  hash: md5
+  path: modelo_colaborativo_normalizado.pkl

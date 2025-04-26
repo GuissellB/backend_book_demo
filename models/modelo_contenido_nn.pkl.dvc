@@ -1,0 +1,5 @@
+outs:
+- md5: d0c3d81df6267fc034f4812a71c6cb91
+  size: 458843083
+  hash: md5
+  path: modelo_contenido_nn.pkl

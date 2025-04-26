@@ -4,7 +4,8 @@ __pycache__/
 *$py.class
 *.pyc
 .venv/
-models/
+models/modelo_colaborativo_normalizado.pkl
+models/modelo_contenido_nn.pkl
 metrics/
 # C extensions
 *.so
