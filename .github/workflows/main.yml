@@ -14,6 +14,9 @@ jobs:
     container: docker://dvcorg/cml:latest
     env:
       repo_token: ${{ secrets.GITHUBTOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
 
     steps:
       - uses: actions/checkout@v2
@@ -23,6 +26,33 @@ jobs:
 
       - name: Install requirements
         run: pip install -r requirements.txt
+
+      - name: Download data from S3
+        run: |
+          python3 download_data.py
+
+      - name: Configure DVC remote
+        run: |
+          dvc remote add -f data-versioning s3://proyecto-guiss-b
+          dvc remote modify data-versioning region us-east-1
+
+      - name: Mark repo as safe
+        run: |
+          git config --global --add safe.directory /__w/backend_book_demo/backend_book_demo
+
+      - name: Track dataset with DVC
+        run: |
+          VERSION=$(git tag | grep ^v | sort -V | tail -n 1 | sed 's/v//' || echo "0")
+          NEXT_VERSION=$((VERSION + 1))
+          dvc add books_data.csv
+          dvc add Books_rating.csv
+          git config --global user.email "guissell202@gmail.com"
+          git config --global user.name "GuissellB"
+          git commit -m "Auto-track dataset via DVC - Version v$NEXT_VERSION"
+
+      - name: Push dataset to S3 via DVC
+        run: |
+          dvc push -r data-versioning
 
       - name: Execute the training model
         run: |
