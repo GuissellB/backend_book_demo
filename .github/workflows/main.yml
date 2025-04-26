@@ -26,16 +26,33 @@ jobs:
 
       - name: Execute the training model
         run: |
-          python3 diabetes_retraining.py
+          python train_recommender_hybrid.py
 
       - name: Generating report
         run: |
-          echo "## Model metrics" > report.md
-          cat metrics_diabetes.txt >> report.md
-          
-          echo "## ROC Curve" >> report.md
-          cml-publish roc_diabetes.png --md >> report.md
-          
+          echo "## Hybrid Model Metrics Report" > report.md
+
+          echo "### Collaborative Metrics (Normalized, Filtered)" >> report.md
+          cat metrics/hybrid_collaborative_metrics_normalized_filtered.txt >> report.md
+
+          echo "### Content Metrics" >> report.md
+          cat metrics/hybrid_content_metrics.txt >> report.md
+
+          echo "### Content Samples" >> report.md
+          cat metrics/hybrid_content_samples.txt >> report.md
+
+          echo "### Error Histogram" >> report.md
+          cml-publish metrics/hybrid_collaborative_error_histogram.png --md >> report.md
+
+          echo "### Error Line" >> report.md
+          cml-publish metrics/hybrid_collaborative_error_line.png --md >> report.md
+
+          echo "### Predictions (Normalized, Filtered)" >> report.md
+          cml-publish metrics/hybrid_collaborative_predictions_normalized_filtered.png --md >> report.md
+
+          echo "### Scatter Plot" >> report.md
+          cml-publish metrics/hybrid_collaborative_scatter.png --md >> report.md
+
           cml-send-comment report.md
 
   build_docker_image:
@@ -53,10 +70,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build docker image
-        run: docker build -t guissb/mlops_tarea4:main .
+        run: docker build -t guissb/mlops_books_recommender:dev .
 
       - name: Docker push to Dockerhub
-        run: docker push guissb/mlops_tarea4:main
+        run: docker push guissb/mlops_books_recommender:dev
 
       - name: Login into the server
         run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
@@ -69,10 +86,10 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             docker login -u '${{ secrets.DOCKER_USERNAME }}' -p '${{ secrets.DOCKER_PASSWORD }}'
-            if docker ps --all | grep mlops_tarea4; then
-              docker stop mlops_tarea4
-              docker rm mlops_tarea4
+            if docker ps --all | grep backend_book_demo; then
+              docker stop backend_book_demo
+              docker rm backend_book_demo
             fi
             
-            docker pull guissb/mlops_tarea4:main
-            docker run -d --name mlops_tarea4 -p 8000:8000 guissb/mlops_tarea4:main
+            docker pull guissb/mlops_books_recommender:dev
+            docker run -d --name backend_book_demo -p 8000:8000 guissb/mlops_books_recommender:dev
