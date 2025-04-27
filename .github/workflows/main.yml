@@ -48,7 +48,8 @@ jobs:
           dvc add Books_rating.csv
           git config --global user.email "guissell202@gmail.com"
           git config --global user.name "GuissellB"
-          git commit -m "Auto-track dataset via DVC - Version v$NEXT_VERSION"
+          git commit -m "Auto-track dataset via DVC - Version v$NEXT_VERSION" || true
+
 
       - name: Push dataset to S3 via DVC
         run: |
