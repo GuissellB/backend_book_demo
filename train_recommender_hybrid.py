@@ -18,7 +18,7 @@ os.makedirs("models", exist_ok=True)
 # --------------------------------------------
 
 # Cargar los datasets de ratings y libros
-ratings = pd.read_csv("books_rating.csv")
+ratings = pd.read_csv("Books_rating.csv")
 books = pd.read_csv("books_data.csv")
 
 # Eliminar duplicados en ambos datasets
