@@ -61,6 +61,12 @@ jobs:
         run: |
           python train_recommender_hybrid.py
 
+      - name: Verify model file exists
+        run: |
+          echo "Verificando que el modelo fue generado......"
+          ls -lh models/
+          test -f models/modelo_colaborativo_normalizado.pkl && echo "Modelo OK" || (echo "ERROR: No se encontró el modelo .pkl" && exit 1)
+
       - name: Generating report
         run: |
           echo "## Hybrid Model Metrics Report" > report.md
