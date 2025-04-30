@@ -7,4 +7,3 @@ pydantic
 matplotlib
 scikit-learn
 boto3
-dvc-s3

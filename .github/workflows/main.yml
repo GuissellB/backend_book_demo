@@ -26,6 +26,8 @@ jobs:
 
       - name: Install requirements
         run: pip install -r requirements.txt
+      - name: Install DVC S3 support
+        run: pip install --no-deps dvc-s3
 
       - name: Download data from S3
         run: |
