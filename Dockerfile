@@ -5,8 +5,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install --no-deps dvc-s3
-COPY . .
+COPY . /app
 
 EXPOSE 8000
 CMD ["uvicorn", "endpoints:app", "--host", "0.0.0.0", "--port","8000"]
