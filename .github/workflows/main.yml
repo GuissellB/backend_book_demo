@@ -67,6 +67,20 @@ jobs:
           ls -lh models/
           test -f models/modelo_colaborativo_normalizado.pkl && echo "Modelo OK" || (echo "ERROR: No se encontró el modelo .pkl" && exit 1)
 
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-models
+          path: |
+            models/modelo_colaborativo_normalizado.pkl
+            models/modelo_contenido_nn.pkl
+
+      - name: Upload data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-data
+          path: books_data.csv
+
       - name: Generating report
         run: |
           echo "## Hybrid Model Metrics Report" > report.md
@@ -107,6 +121,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Download model artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: deployment-models
+          path: models/
+
+      - name: Download data artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: deployment-data
+          path: .
 
       - name: Build docker image
         run: docker build -t guissb/mlops_books_recommender:dev .
