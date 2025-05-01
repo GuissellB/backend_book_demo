@@ -6,7 +6,7 @@ __pycache__/
 .venv/
 models/modelo_colaborativo_normalizado.pkl
 models/modelo_contenido_nn.pkl
-metrics/
+#metrics/
 # C extensions
 *.so
 
