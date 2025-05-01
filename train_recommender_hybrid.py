@@ -151,7 +151,7 @@ for input_title in books_titles:
         continue
     idx = normalized_index[input_title_norm]
     vector = tfidf_matrix[idx]
-    distances, neighbors = nn.kneighbors(vector)
+    _, neighbors = nn.kneighbors(vector)
     recommended_idxs = neighbors[0][1:]
     sim_vectors = tfidf_matrix[recommended_idxs]
     sim_scores = cosine_similarity(vector, sim_vectors)[0]

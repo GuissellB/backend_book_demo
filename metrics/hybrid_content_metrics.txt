@@ -6,3 +6,4 @@ Similitud promedio entre libros recomendados por contenido: 0.5437
 Similitud promedio entre libros recomendados por contenido: 0.5437
 Similitud promedio entre libros recomendados por contenido: 0.5437
 Similitud promedio entre libros recomendados por contenido: 0.5437
+Similitud promedio entre libros recomendados por contenido: 0.5437
